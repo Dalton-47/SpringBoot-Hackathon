@@ -178,10 +178,7 @@ public class patient_implementation implements patient_service {
     }
 
 
-    public patient addSamplePatient(@RequestBody patient samplePatient) {
 
-        return save(samplePatient);
-    }
 
 
 }

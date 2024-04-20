@@ -4,6 +4,8 @@ import com.example.QhalaHackathon.entity.patient;
 import com.example.QhalaHackathon.implementation.patient_implementation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +27,14 @@ public class patient_controller extends  patient_implementation {
     }
 
     @PostMapping("/add")
-    public patient newPatient(@RequestBody patient patient) {
-            return addSamplePatient(patient);
+    public ResponseEntity<String> newPatient(@RequestBody patient samplePatient) {
+
+        if(samplePatient != null) {
+            save(samplePatient);
+            return new ResponseEntity<>("Patient Added Successfully", HttpStatus.CREATED);
+        } else {
+            // Handle the case where the patient was not saved
+            return new ResponseEntity<>("Failed to add patient", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
