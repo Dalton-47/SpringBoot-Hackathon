@@ -1,7 +1,9 @@
 package com.example.QhalaHackathon.implementation;
 
 import com.example.QhalaHackathon.entity.patient;
+import com.example.QhalaHackathon.repository.hospital_repository;
 import com.example.QhalaHackathon.repository.patient_repository;
+import com.example.QhalaHackathon.service.hospital_service;
 import com.example.QhalaHackathon.service.patient_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -9,20 +11,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-public class patient_implementation implements patient_service {
+public class patient_implementation implements patient_service{
 
     @Autowired
     patient_repository patient_repository;
+
 
     @Override
     public void flush() {
@@ -61,9 +61,7 @@ public class patient_implementation implements patient_service {
 
     @Override
     public patient getById(Long aLong) {
-
-
-        return null;
+        return patient_repository.getById(aLong);
     }
 
     @Override
@@ -128,7 +126,12 @@ public class patient_implementation implements patient_service {
 
     @Override
     public List<patient> findAll() {
-        return null;
+        List<patient> patients = patient_repository.findAll();
+
+        // Logging the retrieved patients
+        System.out.println("Retrieved patients: " + patients);
+
+        return patients;
     }
 
     @Override
@@ -175,6 +178,12 @@ public class patient_implementation implements patient_service {
     @Override
     public Page<patient> findAll(Pageable pageable) {
         return null;
+    }
+
+
+    @Override
+    public Optional<patient> findByidentificationNumber(String identificationNumber) {
+        return patient_repository.findByidentificationNumber(identificationNumber);
     }
 
 
