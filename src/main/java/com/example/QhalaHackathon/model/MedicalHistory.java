@@ -1,4 +1,4 @@
-package com.example.QhalaHackathon.entity;
+package com.example.QhalaHackathon.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,9 @@ import java.util.Date;
 @Table(name = "medical_history")
 @Data
 @AllArgsConstructor
-public class medical_history {
+public class MedicalHistory {
+    public MedicalHistory() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +24,10 @@ public class medical_history {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "medical_condition", nullable = false, length = 255)
+    @Column(name = "medical_condition", nullable = false, length = 2000)
     private String medicalCondition;
 
-    @Column(name = "diagnosis", length = 255)
+    @Column(name = "diagnosis", length = 2000)
     private String diagnosis;
 
     @Column(name = "doctor_id", nullable = false)
