@@ -8,6 +8,8 @@ import com.example.QhalaHackathon.repository.doctor_repository;
 import com.example.QhalaHackathon.repository.hospital_repository;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,9 +26,12 @@ public class DoctorService {
 
     private hospital_repository hospitalRepository;
 
+    private ModelMapper modelMapper;
+
     @Autowired
-    private DoctorService (@Qualifier("doctor_repository") doctor_repository doctorRepository, @Qualifier("hospital_repository") hospital_repository hospitalRepository)
+    private DoctorService (ModelMapper modelMapper,@Qualifier("doctor_repository") doctor_repository doctorRepository, @Qualifier("hospital_repository") hospital_repository hospitalRepository)
       {
+          this.modelMapper=modelMapper;
           this.hospitalRepository =hospitalRepository;
           this.doctorRepository = doctorRepository;
       }
@@ -51,13 +56,14 @@ public class DoctorService {
       {
         DoctorHospitalDTO doctorHospitalDTO = new DoctorHospitalDTO();
 
-          doctorHospitalDTO.setDoctorID(doctor.getDoctorID());
-          doctorHospitalDTO.setDoctorName(doctor.getDoctorName());
-          doctorHospitalDTO.setDoctorEmail((doctor.getDoctorEmail()));
-          doctorHospitalDTO.setDoctorSpecialty(doctor.getDoctorSpecialty());
-          doctorHospitalDTO.setHospitalName(doctor.getHospital().getHospitalName());
-          doctorHospitalDTO.setHospitalLocation(doctor.getHospital().getHospitalLocation());
+//          doctorHospitalDTO.setDoctorID(doctor.getDoctorID());
+//          doctorHospitalDTO.setDoctorName(doctor.getDoctorName());
+//          doctorHospitalDTO.setDoctorEmail((doctor.getDoctorEmail()));
+//          doctorHospitalDTO.setDoctorSpecialty(doctor.getDoctorSpecialty());
+//          doctorHospitalDTO.setHospitalName(doctor.getHospital().getHospitalName());
+//          doctorHospitalDTO.setHospitalLocation(doctor.getHospital().getHospitalLocation());
 
+          doctorHospitalDTO = modelMapper.map(doctor, DoctorHospitalDTO.class);
              return doctorHospitalDTO;
       }
 
